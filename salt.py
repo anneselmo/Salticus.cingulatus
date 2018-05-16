@@ -82,9 +82,9 @@ def pagegets(url): #download
             page=""
             https=3
         try:
-            got_list[url]=(sha1(page.content).hexdigest(), datetime.datetime.now().timestamp())
+            got_list[url]=(sha1(page.content).hexdigest(), [int(datetime.datetime.now().timestamp())])
         except:
-            got_list[url]=(sha1(b"").hexdigest(), datetime.datetime.now().timestamp())
+            got_list[url]=(sha1(b"").hexdigest(), [int(datetime.datetime.now().timestamp())])
         return(page, https)
 
 def linksget2(page, rooturl): #derives a list of links from an html page
@@ -158,4 +158,4 @@ def countloop(pre_list, rounds, limit, threads, place):
         if len(neo_list) > limit:
             neo_list=random.sample(neo_list, limit)
     utils.dict2cdb(got_list, path+"/got_list.dict.cdb")
-    return(0)
+    return(got_list)
