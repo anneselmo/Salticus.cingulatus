@@ -2,6 +2,7 @@
 # a webcrawler
 import requests
 from urllib.parse import urlsplit
+from hashlib import sha1
 from multiprocessing.dummy import Pool
 from bs4 import BeautifulSoup
 import cdbx
@@ -63,7 +64,6 @@ def pagegets(url): #download
     if url in got_list:
         return("", 3)
     else:
-        got_list = (got_list+[url])
         try:
             if findbaseurl(url).endswith('.onion'): 
                 tor=requests.session()
@@ -79,6 +79,7 @@ def pagegets(url): #download
         except requests.exceptions.RequestException:
             page=""
             https=3
+        got_list[url]=sha1(page.content).hexdigest()
         return(page, https)
 
 def linksget2(page, rooturl): #derives a list of links from an html page
@@ -122,15 +123,15 @@ def nlistclean(flist):
 
 def countloop(pre_list, rounds, limit, threads, place):
     global got_list, neo_list
-    root=os.path.abspath(.)
-    got_list = []
+    root=os.path.abspath(".")
+    got_list = {}
     neo_list = pre_list
     i=0
     pool=Pool(threads)
     if type(place) is str:
         path=place
     else:
-        path=root+/+datetime.datetime.now().strftime(%F.%T)
+        path=root+"/"+datetime.datetime.now().strftime("%F.%T")
 
     print(path, root)
     try:
@@ -139,18 +140,18 @@ def countloop(pre_list, rounds, limit, threads, place):
     except:
         os.chdir(path)
 
-    os.mkdir(crawl)
-    os.chdir(crawl)
+    os.mkdir("crawl")
+    os.chdir("crawl")
 
     neo_list=trueget(neo_list)
     while i < rounds:
-        print(THREADS)
+        print("THREADS")
         pool.map(trueget, list_byte(24))
         i=i+1
         if i > 2:
             neo_list=nlistclean(pre_list)
         if len(neo_list) > limit:
             neo_list=random.sample(neo_list, limit)
-    return(f)
+    return("f")
 
 countloop()
