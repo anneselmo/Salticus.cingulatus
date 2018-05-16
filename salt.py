@@ -152,6 +152,4 @@ def countloop(pre_list, rounds, limit, threads, place):
             neo_list=nlistclean(pre_list)
         if len(neo_list) > limit:
             neo_list=random.sample(neo_list, limit)
-    return("f")
-
-countloop()
+    return(0)
