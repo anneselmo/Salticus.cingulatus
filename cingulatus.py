@@ -102,37 +102,6 @@ def linksget2(page, rooturl): #derives a list of links from an html page
 def nameclean(name): #fixes filenames 
     return(name.replace("/", "-"))
 
-def countloop():
-    global got_list, neo_list
-    root=os.path.abspath(".")
-    got_list = []
-    pre_list = [] #insert urls here, as a list of strings
-    neo_list = pre_list
-    i, rounds=0, 4 
-    limit, threads=200000, 12
-    pool=Pool(threads)
-    path=root+"/"+datetime.datetime.now().strftime("%F.%T")
-
-    try:
-        os.mkdir(path)
-        os.chir(path)
-    except:
-        os.chdir(path)
-    
-    os.mkdir("crawl")
-    os.chdir("crawl")
-
-    neo_list=trueget(neo_list)
-    while i < rounds:
-        print("THREADS")
-        pool.map(trueget, list_byte(24))
-        i=i+1
-        if i > 2:
-            neo_list=nlistclean(pre_list)
-        if len(neo_list) > limit:
-            neo_list=random.sample(neo_list, limit)
-    return("f")
-
 def list_byte(size):
     count=round(len(neo_list)/size)+1
     return([neo_list[x:x+count] for x in range(0, len(neo_list), count)])
@@ -150,5 +119,38 @@ def nlistclean(flist):
             pass
     neo_list=elist
     return(neo_list)
+
+def countloop(pre_list, rounds, limit, threads, place):
+    global got_list, neo_list
+    root=os.path.abspath(.)
+    got_list = []
+    neo_list = pre_list
+    i=0
+    pool=Pool(threads)
+    if type(place) is str:
+        path=place
+    else:
+        path=root+/+datetime.datetime.now().strftime(%F.%T)
+
+    print(path, root)
+    try:
+        os.mkdir(path)
+        os.chir(path)
+    except:
+        os.chdir(path)
+
+    os.mkdir(crawl)
+    os.chdir(crawl)
+
+    neo_list=trueget(neo_list)
+    while i < rounds:
+        print(THREADS)
+        pool.map(trueget, list_byte(24))
+        i=i+1
+        if i > 2:
+            neo_list=nlistclean(pre_list)
+        if len(neo_list) > limit:
+            neo_list=random.sample(neo_list, limit)
+    return(f)
 
 countloop()
