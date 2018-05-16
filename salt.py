@@ -11,6 +11,8 @@ import os
 import magic
 import random
 
+import utils
+
 def trueget(llist):
     database=cdbx.CDB.make(datetime.datetime.now().strftime("%s")+".html.cdb")
     global neo_list 
