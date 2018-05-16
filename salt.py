@@ -79,7 +79,10 @@ def pagegets(url): #download
         except requests.exceptions.RequestException:
             page=""
             https=3
-        got_list[url]=sha1(page.content).hexdigest()
+        try:
+            got_list[url]=sha1(page.content).hexdigest()
+        except:
+            got_list[url]=sha1(page).hexdigest()
         return(page, https)
 
 def linksget2(page, rooturl): #derives a list of links from an html page
