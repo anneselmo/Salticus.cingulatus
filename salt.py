@@ -70,13 +70,13 @@ def pagegets(url): #download
             if findbaseurl(url).endswith('.onion'): 
                 tor=requests.session()
                 tor.proxies= { 'http': 'socks5h://localhost:9050', 'https': 'socks5h://localhost:9050' }
-                page=tor.get(url, verify=False, headers={"User-Agent": "Salticus scenicus"})
+                page=tor.get(url, verify=False, headers={"User-Agent": "Salticus cingulatus"})
             else:
                 try:
-                    page = requests.get(url, headers={"User-Agent": "Salticus scenicus"}) 
+                    page = requests.get(url, headers={"User-Agent": "Salticus cingulatus"}) 
                     https=1
                 except:
-                    page = requests.get(url, verify=False, headers={"User-Agent": "Salticus scenicus"}) #ignore https errors
+                    page = requests.get(url, verify=False, headers={"User-Agent": "Salticus cingulatus"}) #ignore https errors
                     https=0
         except requests.exceptions.RequestException:
             page=""
