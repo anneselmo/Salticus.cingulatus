@@ -1,5 +1,6 @@
 #! /usr/bin/py
 
+import os
 import datetime
 
 from time import sleep
@@ -15,23 +16,51 @@ def wait_until(utime):
 def merge_got_list(ngot_list, got_list):
     for key in ngot_list:
         if key in got_list:
-            if got_list[key][0] is not ngot_list[key][0]:
-                got_list[key][0] = ngot_list[key][0]
-                got_list[key][1].append(ngot_list[key][1][0])
+            if got_list[key][0][-1:] is not ngot_list[key][0]:
+                got_list[key][0].append(ngot_list[key][0])
+                got_list[key][1].append(ngot_list[key][1])
         else:
-             got_list[key]=ngot_list[key]
+            got_list[key]=([ngot_list[key][0]], [ngot_list[key][1]])
     return(got_list)
 
+
+#def guess_timess(llist):
+#    glist={} 
+#    for item in llist:
+#        i=0
+#        dif=0
+#        while i > len(llist[item][1][i]):
+#            if i is not 0:
+#                last=item[1][i]
+#                dif=dif+(last - item[1][i-1])
+#                print("LAST", last)
+#            i=i+1
+#        avg=dif/(i+1)
+#        glist[item]=int(last+avg)
+#    return(glist)
+#
+#def guess_times(llist):
+#    glist={}
+#    for item in llist:
+#        i=0
+#        value=0
+#        for entry in llist[item]:
+#            print("ENTREE:", entry, type(entry), "\nVALUE:", value, type(value))
+#            value=value+entry
+#            i=i+1
+#        glist[item]=value/i
+#    return(glist)
+
 def guess_times(llist):
-    glist={} 
+    glist={}
     for item in llist:
-        dif=0
-        while i > len(item[1]):
+        i=0
+        value=0
+        for time in llist[item][1]:
             if i is not 0:
-                last=item[1][i]
-                dif=dif+(last - item[1][i-1])
-        avg=dif/(i+1)
-        glist[item]=int(last+avg)
+                value=value+(time-llist[item][1][i-1])
+            i=i+1
+        glist[item]=int(value/i)
     return(glist)
 
 def gen_get_list(llist, time):
@@ -44,6 +73,7 @@ def gen_get_list(llist, time):
     return(get_list)
                 
 def crawl_loop():
+    root=os.path.abspath(".")
     global got_list
     try:
         got_list=cdb2dict(cpath+"/updates.dict.cdb")
@@ -53,8 +83,11 @@ def crawl_loop():
     rounds=1
     limit=320
     threads=3
-    got_list=merge_got_list(salt.countloop(, rounds, limit, threads), got_list)
-    while True:
-        got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads), got_list)
-        get_list=gen_get_list(got_list)
-        utils.dict2cdb(got_list, path+"/updates.dict.cdb") 
+    got_list=merge_got_list(salt.countloop([], rounds, limit, threads, root+"/qqqq"), got_list)
+    get_list=gen_get_list(got_list, 86400)
+
+#     while True:
+#         got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads), got_list)
+#         get_list=gen_get_list(got_list)
+#         utils.dict2cdb(got_list, path+"/updates.dict.cdb") 
+    return(got_list)
