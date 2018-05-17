@@ -44,7 +44,7 @@ def gen_get_list(llist, time):
             get_list.append(item)
     return(get_list)
                 
-def crawl_loop():
+def crawl_loop(get_list):
     root=os.path.abspath(".")
     global got_list
     try:
@@ -52,13 +52,14 @@ def crawl_loop():
         get_list=gen_get_list(got_list, 86400)
     except:
         got_list={}
-    rounds=1
+    rounds=2
     limit=320
     threads=3
-    got_list=merge_got_list(salt.countloop([], rounds, limit, threads, root+"/qqqq"), got_list)
+    place=root+"/qqqa/"
+    got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads, 000000000), got_list)
     get_list=gen_get_list(got_list, 86400)
     while True:
-        got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads), got_list)
+        got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads, 0), got_list)
         get_list=gen_get_list(got_list)
         utils.dict2cdb(got_list, path+"/updates.dict.cdb") 
     return(got_list)
