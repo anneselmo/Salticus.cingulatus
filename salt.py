@@ -82,9 +82,9 @@ def pagegets(url): #download
             page=""
             https=3
         try:
-            got_list[url]=(sha1(page.content).hexdigest(), [int(datetime.datetime.now().timestamp())])
+            got_list[url]=(sha1(page.content).hexdigest(), int(datetime.datetime.now().timestamp()))
         except:
-            got_list[url]=(sha1(b"").hexdigest(), [int(datetime.datetime.now().timestamp())])
+            got_list[url]=(sha1(b"").hexdigest(), int(datetime.datetime.now().timestamp()))
         return(page, https)
 
 def linksget2(page, rooturl): #derives a list of links from an html page
