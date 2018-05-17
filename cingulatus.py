@@ -23,34 +23,6 @@ def merge_got_list(ngot_list, got_list):
             got_list[key]=([ngot_list[key][0]], [ngot_list[key][1]])
     return(got_list)
 
-
-#def guess_timess(llist):
-#    glist={} 
-#    for item in llist:
-#        i=0
-#        dif=0
-#        while i > len(llist[item][1][i]):
-#            if i is not 0:
-#                last=item[1][i]
-#                dif=dif+(last - item[1][i-1])
-#                print("LAST", last)
-#            i=i+1
-#        avg=dif/(i+1)
-#        glist[item]=int(last+avg)
-#    return(glist)
-#
-#def guess_times(llist):
-#    glist={}
-#    for item in llist:
-#        i=0
-#        value=0
-#        for entry in llist[item]:
-#            print("ENTREE:", entry, type(entry), "\nVALUE:", value, type(value))
-#            value=value+entry
-#            i=i+1
-#        glist[item]=value/i
-#    return(glist)
-
 def guess_times(llist):
     glist={}
     for item in llist:
@@ -85,9 +57,8 @@ def crawl_loop():
     threads=3
     got_list=merge_got_list(salt.countloop([], rounds, limit, threads, root+"/qqqq"), got_list)
     get_list=gen_get_list(got_list, 86400)
-
-#     while True:
-#         got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads), got_list)
-#         get_list=gen_get_list(got_list)
-#         utils.dict2cdb(got_list, path+"/updates.dict.cdb") 
+    while True:
+        got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads), got_list)
+        get_list=gen_get_list(got_list)
+        utils.dict2cdb(got_list, path+"/updates.dict.cdb") 
     return(got_list)
