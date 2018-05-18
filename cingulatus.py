@@ -59,9 +59,12 @@ def crawl_loop(get_list):
     wtime=86400
     got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads, 0), got_list)
     get_list=gen_get_list(got_list, wtime)
+    wait_until(int(datetime.datetime.now().timestamp())+wtime)
     while True:
         got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads, 0), got_list)
         get_list=gen_get_list(got_list)
+        print(get_list)
         utils.dict2cdb(got_list, path+"/updates.dict.cdb")
+        utils.dict2cdb(got_list, path+datetime.datetime.now().strftime("%F.%S")+"/updates.dict.cdb")
         wait_until(int(datetime.datetime.now().timestamp())+wtime)
     return(got_list)
