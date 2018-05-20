@@ -48,9 +48,9 @@ def crawl_loop(get_list):
     rounds=2
     limit=320
     threads=5
-    place=root+"/qqqa/"
     wtime=86400
     root=os.path.abspath(".")
+    place=root+"/qqqa/"
     global got_list
     try:
         got_list=cdb2dict(cpath+"/updates.dict.cdb")
@@ -61,6 +61,7 @@ def crawl_loop(get_list):
     get_list=gen_get_list(got_list, wtime)
     wait_until(int(datetime.datetime.now().timestamp())+wtime)
     while True:
+        os.chdir(place)
         got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads, 0), got_list)
         get_list=gen_get_list(got_list)
         print(get_list)
