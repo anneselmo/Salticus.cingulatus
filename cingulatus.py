@@ -61,7 +61,11 @@ def crawl_loop(get_list):
     get_list=gen_get_list(got_list, wtime)
     wait_until(int(datetime.datetime.now().timestamp())+wtime)
     while True:
-        os.chdir(place)
+        try:
+            os.chdir(place)
+        except:
+            os.makedirs(place)
+            os.chdir(place)
         got_list=merge_got_list(salt.countloop(get_list, rounds, limit, threads, 0), got_list)
         get_list=gen_get_list(got_list)
         print(get_list)
